@@ -1,17 +1,13 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, Modal, StyleSheet} from 'react-native';
 import RadioButtons from './RadioButtons';
 import constants from '../utility/constants';
 
-const SortModal = ({visible, setModalVisible, setChecked}) => {
-  const [selectedOption, setSelectedOption] = useState(
-    constants.sortOptions[0],
-  );
-
+const SortModal = ({visible, setModalVisible, setSortType, selected}) => {
   const onSelect = item => {
-    if (!(selectedOption && selectedOption.key === item.key)) {
-      setSelectedOption(item);
-      setChecked(item.text);
+    if (selected && selected.key !== item.key) {
+      console.log('on select-=', item.key);
+      setSortType(item);
     }
   };
 
@@ -28,7 +24,7 @@ const SortModal = ({visible, setModalVisible, setChecked}) => {
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
             <RadioButtons
-              selectedOption={selectedOption}
+              selectedOption={selected}
               onSelect={onSelect}
               options={constants.sortOptions}
             />

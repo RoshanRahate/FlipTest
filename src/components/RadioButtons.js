@@ -1,28 +1,30 @@
+/**
+ * Custom Radio button component
+ */
+
 import React from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 
-const RadioButtons = ({options, selectedOption, onSelect}) => {
-  return (
-    <View style={styles.container}>
-      {options.map(item => {
-        return (
-          <View key={item.key} style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.circle}
-              onPress={() => {
-                onSelect(item);
-              }}>
-              {selectedOption && selectedOption.key === item.key && (
-                <View style={styles.checkedCircle} />
-              )}
-            </TouchableOpacity>
-            <Text style={styles.textLabel}>{item.text}</Text>
-          </View>
-        );
-      })}
-    </View>
-  );
-};
+const RadioButtons = ({options, selectedOption, onSelect}) => (
+  <View style={styles.container}>
+    {options.map(item => {
+      return (
+        <View key={item.key} style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.circle}
+            onPress={() => {
+              onSelect(item);
+            }}>
+            {selectedOption && selectedOption.key === item.key && (
+              <View style={styles.checkedCircle} />
+            )}
+          </TouchableOpacity>
+          <Text style={styles.textLabel}>{item.text}</Text>
+        </View>
+      );
+    })}
+  </View>
+);
 
 export default RadioButtons;
 

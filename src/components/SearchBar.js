@@ -1,3 +1,8 @@
+/**
+ * Search Component with Search bar and Sort by type.
+ * Actions performed are passed to the parent compoents with props
+ */
+
 import React from 'react';
 import {
   Text,
@@ -22,7 +27,7 @@ const SearchBar = ({onChange, sortByType, onArrowClick}) => {
       </View>
       <View style={[styles.sortTypeView]}>
         <Text style={styles.sortTypeLabel} numberOfLines={2}>
-          {sortByType}
+          {sortByType.text}
         </Text>
         <Pressable
           onPress={() => {
@@ -72,6 +77,5 @@ const styles = StyleSheet.create({
     color: 'grey',
     fontSize: 17,
     padding: 8,
-    // width: '95%',
   },
 });

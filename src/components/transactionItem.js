@@ -1,6 +1,5 @@
 import React from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
-// import { Button } from 'react-native-paper';
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {getFormatedDate, currencyFormatter, toTitleCase} from '../utility';
@@ -29,19 +28,19 @@ const TransactionItem = props => {
         />
         <View style={styles.leftView}>
           <View style={styles.bankView}>
-            <Text style={styles.bankText}>{toTitleCase(sender_bank)}</Text>
+            <Text style={styles.bankText}>{sender_bank && toTitleCase(sender_bank)}</Text>
             <Icon name="arrow-right" size={22} style={styles.arrowIcon} />
-            <Text style={styles.bankText}>{toTitleCase(beneficiary_bank)}</Text>
+            <Text style={styles.bankText}>{beneficiary_bank && toTitleCase(beneficiary_bank)}</Text>
           </View>
           <Text style={styles.benificeryName}>
-            {beneficiary_name.toUpperCase()}
+            {beneficiary_name && beneficiary_name.toUpperCase()}
           </Text>
           <View style={styles.amountView}>
-            <Text style={styles.amount}>{`Rp${currencyFormatter(
+            <Text style={styles.amount}>{amount && `Rp${currencyFormatter(
               amount,
             )}`}</Text>
             <View style={styles.dateView} />
-            <Text style={styles.amount}>{getFormatedDate(created_at)}</Text>
+            <Text style={styles.amount}>{created_at && getFormatedDate(created_at)}</Text>
           </View>
         </View>
         <View style={styles.rightView}>
@@ -62,7 +61,7 @@ const TransactionItem = props => {
                   props.transaction.item.status.toLowerCase() === 'success',
                 ).buttonText
               }>
-              {toTitleCase(status.toLowerCase())}
+              {status && toTitleCase(status.toLowerCase())}
             </Text>
           </TouchableOpacity>
         </View>

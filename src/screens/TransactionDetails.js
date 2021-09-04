@@ -24,7 +24,7 @@ const TransactionDetails = ({route: {params}}) => {
         <View style={styles.transactionIDView}>
           <Text style={styles.transactionIdText}>{`ID TRANSAKSI: #${id}`}</Text>
           <Icon
-            style={{padding: 10}}
+            style={styles.copyIcon}
             color={'#FF6047'}
             size={25}
             name={'content-copy'}
@@ -35,34 +35,30 @@ const TransactionDetails = ({route: {params}}) => {
         <View style={styles.transactionDetailView}>
           <Text style={styles.detailTransactionText}>DETAIL TRANSAKSI</Text>
           <Text
-            style={[
-              styles.statusText,
-              {color: status == 'SUCCESS' ? '#58B583' : '#F06C3A'},
-            ]}>
-            {' '}
-            {toTitleCase(status.toLowerCase())}{' '}
+            style={status && statusStyles(status.toLowerCase() === 'success').statusText}>
+            {toTitleCase(status.toLowerCase())}
           </Text>
         </View>
         <View style={styles.detailsSepratorView} />
 
         <View style={styles.banksView}>
           <View style={styles.bankView}>
-            <Text style={styles.bankText}>{toTitleCase(sender_bank)}</Text>
+            <Text style={styles.bankText}>{sender_bank && toTitleCase(sender_bank)}</Text>
             <Icon name="arrow-right" size={30} />
-            <Text style={styles.bankText}>{toTitleCase(beneficiary_bank)}</Text>
+            <Text style={styles.bankText}>{beneficiary_bank && toTitleCase(beneficiary_bank)}</Text>
           </View>
         </View>
 
         <View style={styles.sectionView}>
           <View style={styles.leftColumn}>
             <Text style={styles.titleText}>
-              {beneficiary_name.toUpperCase()}
+              {beneficiary_name && beneficiary_name.toUpperCase()}
             </Text>
             <Text style={styles.valueText}>{account_number}</Text>
           </View>
           <View style={styles.rightColumn}>
             <Text style={styles.titleText}>NOMINAL</Text>
-            <Text style={styles.valueText}>{`Rp${currencyFormatter(
+            <Text style={styles.valueText}>{amount && `Rp${currencyFormatter(
               amount,
             )}`}</Text>
           </View>
@@ -82,8 +78,8 @@ const TransactionDetails = ({route: {params}}) => {
         <View style={styles.sectionView}>
           <View>
             <Text style={styles.titleText}>WAKTU DIBUAT</Text>
-            <Text style={[styles.valueText, {paddingBottom: 30}]}>
-              {getFormatedDate(created_at)}
+            <Text style={[styles.valueText, styles.dateText]}>
+              {created_at && getFormatedDate(created_at)}
             </Text>
           </View>
         </View>
@@ -92,11 +88,25 @@ const TransactionDetails = ({route: {params}}) => {
   );
 };
 
+const statusStyles = isSuccess =>
+  StyleSheet.create({
+    statusText: {
+      fontSize: 17,
+      fontWeight: '500',
+      paddingRight: 30,
+      alignSelf: 'center',
+      color: isSuccess ? '#58B583' : '#F06C3A',
+    },
+  });
+
 export default TransactionDetails;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  copyIcon: {
+    padding: 10,
   },
   bankView: {
     flexDirection: 'row',
@@ -133,12 +143,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 25,
   },
-  statusText: {
-    fontSize: 17,
-    fontWeight: '500',
-    padding: 20,
-    alignSelf: 'center',
-  },
+
   transactionIDView: {
     flexDirection: 'row',
     backgroundColor: '#fff',
@@ -175,5 +180,8 @@ const styles = StyleSheet.create({
   rightColumn: {
     flexDirection: 'column',
     width: '40%',
+  },
+  dateText: {
+    paddingBottom: 30,
   },
 });
