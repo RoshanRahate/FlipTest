@@ -6,17 +6,17 @@
  * @flow strict-local
  */
 
-import React from 'react';
+import React, {memo} from 'react';
+import {
+  SafeAreaProvider,
+  initialWindowMetrics,
+} from 'react-native-safe-area-context';
+import {RootNavigator} from './navigator/rootNavigator';
 
-import { RootNavigator } from './navigator/rootNavigator';
-import { SafeAreaProvider, initialWindowMetrics } from "react-native-safe-area-context"
+const App = () => (
+  <SafeAreaProvider initialMetrics={initialWindowMetrics}>
+    <RootNavigator />
+  </SafeAreaProvider>
+);
 
-const App = () => {
-  return (
-    <SafeAreaProvider initialMetrics={initialWindowMetrics}>
-      <RootNavigator />
-    </SafeAreaProvider>
-  );
-};
-
-export default App;
+export default memo(App);
