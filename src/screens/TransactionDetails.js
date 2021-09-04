@@ -2,8 +2,13 @@ import React from 'react';
 import {Text, View, StyleSheet, SafeAreaView, ScrollView} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import {getFormatedDate, currencyFormatter, toTitleCase} from '../utility';
-
+import {getFormattedDate, currencyFormatter, toTitleCase} from '../utility';
+/**
+ * Transactions details screen to view
+ * @param {object} route - navigation route object
+ * @returns
+ * TODO: Need to move hardcoded strings to constants or translation files
+ */
 const TransactionDetails = ({route: {params}}) => {
   const {
     id,
@@ -30,22 +35,29 @@ const TransactionDetails = ({route: {params}}) => {
             name={'content-copy'}
           />
         </View>
-        <View style={styles.idSepratorView} />
+        <View style={styles.idSeparatorView} />
 
         <View style={styles.transactionDetailView}>
           <Text style={styles.detailTransactionText}>DETAIL TRANSAKSI</Text>
           <Text
-            style={status && statusStyles(status.toLowerCase() === 'success').statusText}>
+            style={
+              status &&
+              statusStyles(status.toLowerCase() === 'success').statusText
+            }>
             {toTitleCase(status.toLowerCase())}
           </Text>
         </View>
-        <View style={styles.detailsSepratorView} />
+        <View style={styles.detailsSeparatorView} />
 
         <View style={styles.banksView}>
           <View style={styles.bankView}>
-            <Text style={styles.bankText}>{sender_bank && toTitleCase(sender_bank)}</Text>
+            <Text style={styles.bankText}>
+              {sender_bank && toTitleCase(sender_bank)}
+            </Text>
             <Icon name="arrow-right" size={30} />
-            <Text style={styles.bankText}>{beneficiary_bank && toTitleCase(beneficiary_bank)}</Text>
+            <Text style={styles.bankText}>
+              {beneficiary_bank && toTitleCase(beneficiary_bank)}
+            </Text>
           </View>
         </View>
 
@@ -58,9 +70,9 @@ const TransactionDetails = ({route: {params}}) => {
           </View>
           <View style={styles.rightColumn}>
             <Text style={styles.titleText}>NOMINAL</Text>
-            <Text style={styles.valueText}>{amount && `Rp${currencyFormatter(
-              amount,
-            )}`}</Text>
+            <Text style={styles.valueText}>
+              {amount && `Rp${currencyFormatter(amount)}`}
+            </Text>
           </View>
         </View>
 
@@ -79,7 +91,7 @@ const TransactionDetails = ({route: {params}}) => {
           <View>
             <Text style={styles.titleText}>WAKTU DIBUAT</Text>
             <Text style={[styles.valueText, styles.dateText]}>
-              {created_at && getFormatedDate(created_at)}
+              {created_at && getFormattedDate(created_at)}
             </Text>
           </View>
         </View>
@@ -129,11 +141,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'space-between',
   },
-  idSepratorView: {
+  idSeparatorView: {
     borderBottomColor: '#f8f8f9',
     borderBottomWidth: 1,
   },
-  detailsSepratorView: {
+  detailsSeparatorView: {
     borderBottomColor: '#f8f8f9',
     borderBottomWidth: 2,
   },

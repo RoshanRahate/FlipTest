@@ -13,6 +13,7 @@ import {
   Keyboard,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
+import Constants from '../utility/Constants';
 
 const SearchBar = ({onChange, sortByType, onArrowClick}) => {
   return (
@@ -27,7 +28,7 @@ const SearchBar = ({onChange, sortByType, onArrowClick}) => {
       </View>
       <View style={[styles.sortTypeView]}>
         <Text style={styles.sortTypeLabel} numberOfLines={2}>
-          {sortByType.text}
+          {Constants.sortOptions[sortByType].title}
         </Text>
         <Pressable
           onPress={() => {

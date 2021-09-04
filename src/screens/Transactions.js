@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {
   ActivityIndicator,
   FlatList,
@@ -6,124 +6,34 @@ import {
   StyleSheet,
   Text,
   View,
-  Alert,
 } from 'react-native';
 
 import SearchBar from '../components/SearchBar';
 import SortModal from '../components/Modal';
 import TransactionItem from '../components/TransactionItem';
 
-import {getDate} from '../utility';
-import Constants from '../utility/constants';
+import {useTransactionData} from '../hooks/useTransactionData';
 
-const TransactionsScreen = props => {
-  const [loading, setLoading] = useState(false);
-  const [transactionsData, setTransactionsData] = useState([]);
-  const [displayData, setDisplayData] = useState([]);
-  const [modalVisible, setModalVisible] = useState(false);
-  const [sortBy, setSortBy] = useState(Constants.sortOptions[0]);
-  const [updateList, setUpdateList] = useState(false);
+const TransactionsScreen = ({navigation}) => {
+  const {
+    loading,
+    modalVisible,
+    sortBy,
+    displayData,
+    searchKeyChangeHandler,
+    setModalVisible,
+    setSortBy,
+  } = useTransactionData();
 
-  let searchKeyChangeTimerID;
-
-  useEffect(() => {
-    if (transactionsData.length > 0) {
-      sortDataWith(transactionsData);
-    }
-  }, [transactionsData]);
-
-  useEffect(() => {
-    if (displayData.length > 0) {
-      sortDataWith(displayData);
-    }
-  }, [sortBy]);
-
-  useEffect(() => {
-    const getTransactions = async () => {
-      try {
-        setLoading(true);
-        const transactions = await fetch(Constants.API_URL);
-        const rawTransactions = await transactions.json();
-        let formattedTransactions = Object.keys(rawTransactions).map(
-          key => rawTransactions[key],
-        );
-        setTransactionsData(formattedTransactions);
-        setLoading(false);
-      } catch (error) {
-        setLoading(false);
-        Alert.alert(error);
-      }
-    };
-
-    getTransactions();
-  }, []);
-
-  const filterResults = text => {
-    let searchedtext = text.nativeEvent.text.trim().toLowerCase();
-
-    let updatedData = transactionsData.filter(item => {
-      return (
-        item.beneficiary_name.toLowerCase().includes(searchedtext) ||
-        item.amount.toString().includes(searchedtext) ||
-        item.sender_bank.toLowerCase().includes(searchedtext) ||
-        item.beneficiary_bank.toLowerCase().includes(searchedtext)
-      );
-    });
-    sortDataWith(updatedData);
-  };
-
-  const sortDataWith = transactions => {
-    let sortedTransactions = [];
-    switch (sortBy.key) {
-      case 'aToz':
-        sortedTransactions = transactions.sort((a, b) =>
-          a.beneficiary_name.toLowerCase() > b.beneficiary_name.toLowerCase()
-            ? 1
-            : -1,
-        );
-        break;
-      case 'zToa':
-        sortedTransactions = transactions.sort((a, b) =>
-          a.beneficiary_name.toLowerCase() < b.beneficiary_name.toLowerCase()
-            ? 1
-            : -1,
-        );
-        break;
-      case 'dateNewest':
-        sortedTransactions = transactions.sort((a, b) =>
-          getDate(a.created_at) < getDate(b.created_at) ? 1 : -1,
-        );
-        break;
-      case 'dateOldest':
-        sortedTransactions = transactions.sort((a, b) =>
-          getDate(a.created_at) > getDate(b.created_at) ? 1 : -1,
-        );
-        break;
-      default:
-        break;
-    }
-    
-    setDisplayData(sortedTransactions);
-    setUpdateList(!updateList);
-  };
-
-  const onRowPressed = row => {
-    props.navigation.push('TransactionDetails', row);
-  };
-
-  const onKeyChange = event => {
-    clearTimeout(searchKeyChangeTimerID);
-    event.persist();
-    searchKeyChangeTimerID = setTimeout(() => {
-      filterResults(event);
-    }, 300);
+  const onRowPressedHandler = row => {
+    navigation.push('TransactionDetails', row);
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <SearchBar
-        onChange={onKeyChange}
-        onArrowClick={() => setModalVisible(!modalVisible)}
+        onChange={searchKeyChangeHandler}
+        onArrowClick={() => setModalVisible(prevState => !prevState)}
         sortByType={sortBy}
       />
       <View style={styles.loaderView}>
@@ -136,7 +46,7 @@ const TransactionsScreen = props => {
             renderItem={item => (
               <TransactionItem
                 transaction={item}
-                onRowPressed={row => onRowPressed(row)}
+                onRowPressed={onRowPressedHandler}
               />
             )}
             ListEmptyComponent={
@@ -151,9 +61,7 @@ const TransactionsScreen = props => {
         selected={sortBy}
         setSortType={value => {
           setSortBy(value);
-          setModalVisible(!modalVisible);
-
-          // sortDataWith(displayData);
+          setModalVisible(prevState => !prevState);
         }}
       />
     </SafeAreaView>

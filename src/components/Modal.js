@@ -1,12 +1,11 @@
 import React from 'react';
 import {View, Modal, StyleSheet} from 'react-native';
 import RadioButtons from './RadioButtons';
-import constants from '../utility/constants';
+import Constants from '../utility/Constants';
 
 const SortModal = ({visible, setModalVisible, setSortType, selected}) => {
   const onSelect = item => {
-    if (selected && selected.key !== item.key) {
-      console.log('on select-=', item.key);
+    if (selected && selected !== item) {
       setSortType(item);
     }
   };
@@ -26,7 +25,7 @@ const SortModal = ({visible, setModalVisible, setSortType, selected}) => {
             <RadioButtons
               selectedOption={selected}
               onSelect={onSelect}
-              options={constants.sortOptions}
+              options={Constants.sortOptions}
             />
           </View>
         </View>
@@ -43,7 +42,6 @@ const styles = StyleSheet.create({
     margin: 30,
     borderRadius: 10,
   },
-  //Modal
   centeredView: {
     flex: 1,
     justifyContent: 'center',

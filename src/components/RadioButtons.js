@@ -7,19 +7,19 @@ import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 
 const RadioButtons = ({options, selectedOption, onSelect}) => (
   <View style={styles.container}>
-    {options.map(item => {
+    {Object.keys(options).map(sortKey => {
       return (
-        <View key={item.key} style={styles.buttonContainer}>
+        <View key={sortKey} style={styles.buttonContainer}>
           <TouchableOpacity
             style={styles.circle}
             onPress={() => {
-              onSelect(item);
+              onSelect(sortKey);
             }}>
-            {selectedOption && selectedOption.key === item.key && (
+            {selectedOption && selectedOption === sortKey && (
               <View style={styles.checkedCircle} />
             )}
           </TouchableOpacity>
-          <Text style={styles.textLabel}>{item.text}</Text>
+          <Text style={styles.textLabel}>{options[sortKey].title}</Text>
         </View>
       );
     })}

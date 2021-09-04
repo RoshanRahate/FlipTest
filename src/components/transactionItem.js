@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import {getFormatedDate, currencyFormatter, toTitleCase} from '../utility';
+import {getFormattedDate, currencyFormatter, toTitleCase} from '../utility';
 
 const TransactionItem = props => {
   const {
@@ -20,7 +20,7 @@ const TransactionItem = props => {
       <View style={styles.container}>
         <View
           style={[
-            styles.leftSeprator,
+            styles.leftSeparator,
             containerStyles(
               props.transaction.item.status.toLowerCase() === 'success',
             ).background,
@@ -28,19 +28,25 @@ const TransactionItem = props => {
         />
         <View style={styles.leftView}>
           <View style={styles.bankView}>
-            <Text style={styles.bankText}>{sender_bank && toTitleCase(sender_bank)}</Text>
+            <Text style={styles.bankText}>
+              {sender_bank && toTitleCase(sender_bank)}
+            </Text>
             <Icon name="arrow-right" size={22} style={styles.arrowIcon} />
-            <Text style={styles.bankText}>{beneficiary_bank && toTitleCase(beneficiary_bank)}</Text>
+            <Text style={styles.bankText}>
+              {beneficiary_bank && toTitleCase(beneficiary_bank)}
+            </Text>
           </View>
-          <Text style={styles.benificeryName}>
+          <Text style={styles.beneficiaryName}>
             {beneficiary_name && beneficiary_name.toUpperCase()}
           </Text>
           <View style={styles.amountView}>
-            <Text style={styles.amount}>{amount && `Rp${currencyFormatter(
-              amount,
-            )}`}</Text>
+            <Text style={styles.amount}>
+              {amount && `Rp${currencyFormatter(amount)}`}
+            </Text>
             <View style={styles.dateView} />
-            <Text style={styles.amount}>{created_at && getFormatedDate(created_at)}</Text>
+            <Text style={styles.amount}>
+              {created_at && getFormattedDate(created_at)}
+            </Text>
           </View>
         </View>
         <View style={styles.rightView}>
@@ -77,7 +83,7 @@ const containerStyles = isSuccess =>
     background: {backgroundColor: isSuccess ? '#58B583' : '#F06C3A'},
   });
 
-const buttonStyles = isSucces =>
+const buttonStyles = isSuccess =>
   StyleSheet.create({
     buttonColor: {
       color: '#fff',
@@ -85,15 +91,15 @@ const buttonStyles = isSucces =>
       paddingHorizontal: 8,
       borderWidth: 2,
       borderRadius: 4,
-      backgroundColor: isSucces ? '#58B583' : '#fff',
-      borderColor: isSucces ? '#58B583' : '#F06C3A',
+      backgroundColor: isSuccess ? '#58B583' : '#fff',
+      borderColor: isSuccess ? '#58B583' : '#F06C3A',
     },
   });
 
-const buttonText = isSucces =>
+const buttonText = isSuccess =>
   StyleSheet.create({
     buttonText: {
-      color: isSucces ? '#fff' : '#F06C3A',
+      color: isSuccess ? '#fff' : '#F06C3A',
       fontSize: 15,
       fontWeight: 'bold',
     },
@@ -110,7 +116,7 @@ const styles = StyleSheet.create({
   arrowIcon: {
     paddingHorizontal: 8,
   },
-  leftSeprator: {
+  leftSeparator: {
     width: 10,
     borderTopLeftRadius: 4,
     borderBottomLeftRadius: 4,
@@ -123,7 +129,7 @@ const styles = StyleSheet.create({
     fontSize: 21,
     fontWeight: 'bold',
   },
-  benificeryName: {
+  beneficiaryName: {
     fontSize: 18,
     fontWeight: '500',
     paddingTop: 8,

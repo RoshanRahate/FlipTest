@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import React, {memo} from 'react';
+import React from 'react';
 import {
   SafeAreaProvider,
   initialWindowMetrics,
@@ -19,4 +19,4 @@ const App = () => (
   </SafeAreaProvider>
 );
 
-export default memo(App);
+export default App;

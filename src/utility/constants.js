@@ -1,21 +1,22 @@
 export default {
   API_URL: 'https://nextar.flip.id/frontend-test',
-  sortOptions: [
-    {
+
+  sortOptions: {
+    aToz: {
       key: 'aToz',
-      text: 'Name A-Z',
+      title: 'Name A-Z',
     },
-    {
+    zToa: {
       key: 'zToa',
-      text: 'Name Z-A',
+      title: 'Name Z-A',
     },
-    {
+    dateNewest: {
       key: 'dateNewest',
-      text: 'Date Newest',
+      title: 'Date Newest',
     },
-    {
+    dateOldest: {
       key: 'dateOldest',
-      text: 'Date Oldest',
+      title: 'Date Oldest',
     },
-  ],
+  },
 };
