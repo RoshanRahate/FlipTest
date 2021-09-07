@@ -4,7 +4,7 @@ import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {getFormattedDate, currencyFormatter, toTitleCase} from '../utility';
 
-const TransactionItem = props => {
+const SingleTransaction = props => {
   const {
     sender_bank,
     beneficiary_bank,
@@ -76,7 +76,7 @@ const TransactionItem = props => {
   );
 };
 
-export default TransactionItem;
+export default SingleTransaction;
 
 const containerStyles = isSuccess =>
   StyleSheet.create({

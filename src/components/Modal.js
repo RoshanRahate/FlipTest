@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Modal, StyleSheet} from 'react-native';
 import RadioButtons from './RadioButtons';
-import Constants from '../utility/Constants';
+import constants from '../utility/constants';
 
 const SortModal = ({visible, setModalVisible, setSortType, selected}) => {
   const onSelect = item => {
@@ -25,7 +25,7 @@ const SortModal = ({visible, setModalVisible, setSortType, selected}) => {
             <RadioButtons
               selectedOption={selected}
               onSelect={onSelect}
-              options={Constants.sortOptions}
+              options={constants.sortOptions}
             />
           </View>
         </View>
