@@ -2,7 +2,7 @@ import {useCallback, useEffect, useState} from 'react';
 import {Alert} from 'react-native';
 
 import {getDate} from '../utility';
-import Constants from '../utility/Constants';
+import constants from '../utility/constants';
 
 /**
  * Created a custom hook to separate out the business logic
@@ -19,7 +19,7 @@ import Constants from '../utility/Constants';
 export const useTransactionData = () => {
   const [transactionsData, setTransactionsData] = useState([]);
   const [displayData, setDisplayData] = useState([]);
-  const [sortBy, setSortBy] = useState(Constants.sortOptions.aToz.key);
+  const [sortBy, setSortBy] = useState(constants.sortOptions.aToz.key);
   const [loading, setLoading] = useState(false);
   const [modalVisible, setModalVisible] = useState(false);
   const [updateList, setUpdateList] = useState(false);
@@ -43,7 +43,7 @@ export const useTransactionData = () => {
     const getTransactions = async () => {
       setLoading(true);
       try {
-        const transactions = await fetch(Constants.API_URL);
+        const transactions = await fetch(constants.API_URL);
         const rawTransactions = await transactions.json();
         let formattedTransactions = Object.keys(rawTransactions).map(
           key => rawTransactions[key],
@@ -52,7 +52,7 @@ export const useTransactionData = () => {
         setLoading(false);
       } catch (error) {
         setLoading(false);
-        Alert.alert(error);
+        // Alert.alert(error);
       }
     };
 
@@ -64,26 +64,26 @@ export const useTransactionData = () => {
       let sortedTransactions = [];
 
       switch (sortBy) {
-        case Constants.sortOptions.aToz.key:
+        case constants.sortOptions.aToz.key:
           sortedTransactions = transactions.sort((a, b) =>
             a.beneficiary_name.toLowerCase() > b.beneficiary_name.toLowerCase()
               ? 1
               : -1,
           );
           break;
-        case Constants.sortOptions.zToa.key:
+        case constants.sortOptions.zToa.key:
           sortedTransactions = transactions.sort((a, b) =>
             a.beneficiary_name.toLowerCase() < b.beneficiary_name.toLowerCase()
               ? 1
               : -1,
           );
           break;
-        case Constants.sortOptions.dateNewest.key:
+        case constants.sortOptions.dateNewest.key:
           sortedTransactions = transactions.sort((a, b) =>
             getDate(a.created_at) < getDate(b.created_at) ? 1 : -1,
           );
           break;
-        case Constants.sortOptions.dateOldest.key:
+        case constants.sortOptions.dateOldest.key:
           sortedTransactions = transactions.sort((a, b) =>
             getDate(a.created_at) > getDate(b.created_at) ? 1 : -1,
           );

@@ -10,7 +10,7 @@ import {
 
 import SearchBar from '../components/SearchBar';
 import SortModal from '../components/Modal';
-import TransactionItem from '../components/TransactionItem';
+import SingleTransaction from '../components/SingleTransaction';
 
 import {useTransactionData} from '../hooks/useTransactionData';
 
@@ -44,7 +44,7 @@ const TransactionsScreen = ({navigation}) => {
             keyboardDismissMode="on-drag"
             data={displayData}
             renderItem={item => (
-              <TransactionItem
+              <SingleTransaction
                 transaction={item}
                 onRowPressed={onRowPressedHandler}
               />

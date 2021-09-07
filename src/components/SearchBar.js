@@ -13,7 +13,7 @@ import {
   Keyboard,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import Constants from '../utility/Constants';
+import Constants from '../utility/constants';
 
 const SearchBar = ({onChange, sortByType, onArrowClick}) => {
   return (
