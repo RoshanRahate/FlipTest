@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -23,7 +23,12 @@ export const RootNavigator = () => (
           title: 'Transaction Details',
           headerLeft: () => (
             <TouchableOpacity onPress={navigation.goBack}>
-              <Icon color={'#FF6047'} size={30} name={'arrow-left'} />
+              <Icon
+                color={'#FF6047'}
+                size={30}
+                style={styles.backArrow}
+                name={'arrow-left'}
+              />
             </TouchableOpacity>
           ),
         })}
@@ -33,3 +38,9 @@ export const RootNavigator = () => (
 );
 
 RootNavigator.displayName = 'RootNavigator';
+
+const styles = StyleSheet.create({
+  backArrow: {
+    marginRight: 10,
+  },
+});

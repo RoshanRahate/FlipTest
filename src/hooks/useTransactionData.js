@@ -111,6 +111,7 @@ export const useTransactionData = () => {
       );
     });
     setDisplayData(updatedData);
+    setUpdateList(!updateList);
   };
 
   /**
@@ -134,5 +135,6 @@ export const useTransactionData = () => {
     searchKeyChangeHandler,
     setModalVisible,
     setSortBy,
+    updateList,
   };
 };

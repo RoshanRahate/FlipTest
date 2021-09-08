@@ -23,6 +23,7 @@ const TransactionsScreen = ({navigation}) => {
     searchKeyChangeHandler,
     setModalVisible,
     setSortBy,
+    updateList,
   } = useTransactionData();
 
   const onRowPressedHandler = row => {
@@ -52,7 +53,7 @@ const TransactionsScreen = ({navigation}) => {
             ListEmptyComponent={
               <Text style={styles.emptyListText}>No results found.</Text>
             }
-            keyExtractor={item => item.unique_code}
+            extraData={updateList}
           />
         )}
       </View>
